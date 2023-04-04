@@ -6,7 +6,7 @@ It has 2 abstract classes, which serve as the base classes for 5 others: Reader,
 
 For example, when the user chooses to increase a reeader's budget, the application checks whether the input is a higher than 0. If it is not, an IllegalArgumentException with a custom error message is thrown, and the user is prompted to enter a valid number. The app avoids invalid input altogether.
 
-#Functionality
+Functionality
 BookWise offers the following functionalities:
 
 Adding a new product - book, light novel, or game
@@ -21,5 +21,5 @@ A super secret option that will tell you something about your future
 
 While the other objects are kept in Array Lists, the authors are represented as a priority queue, sorted by the number of awards they have won.
 
-#Usage
+Usage
 To use the BookWise, simply download the source code and compile it using your favorite Java compiler.
