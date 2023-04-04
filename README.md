@@ -10,14 +10,23 @@ Functionality
 BookWise offers the following functionalities:
 
 Adding a new product - book, light novel, or game
+
 Removing an existing product
+
 Searching for authors by nationality
+
 Listing all products, readers, sections and authors in the library
+
 Adding a new author
+
 Testing how much money readers need in their account in order to buy certain products
+
 Buying products for readers
+
 Calculating total number of awards that authors have won
+
 A super secret option that will tell you something about your future
+
 
 While the other objects are kept in Array Lists, the authors are represented as a priority queue, sorted by the number of awards they have won.
 
