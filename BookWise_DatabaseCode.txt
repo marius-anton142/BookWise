@@ -1,0 +1,78 @@
+CREATE TABLE Section (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    popularity INT NOT NULL
+);
+
+CREATE TABLE Author (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    phone INT NOT NULL,
+    penName VARCHAR(255) DEFAULT '?',
+    nationality VARCHAR(255) DEFAULT '?',
+    awardsWon INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE Book (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
+    section_id INT,
+    author_id INT,
+    description VARCHAR(255) NOT NULL,
+    pages INT NOT NULL,
+    edition INT NOT NULL,
+    FOREIGN KEY (section_id) REFERENCES Section(id),
+    FOREIGN KEY (author_id) REFERENCES Author(id)
+);
+
+CREATE TABLE LightNovel (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
+    section_id INT,
+    author_id INT,
+    artist VARCHAR(255) NOT NULL,
+    pages INT NOT NULL,
+    volumes INT NOT NULL,
+    FOREIGN KEY (section_id) REFERENCES Section(id),
+    FOREIGN KEY (author_id) REFERENCES Author(id)
+);
+
+INSERT INTO Section (title, popularity)
+VALUES ('Science Fiction', 87);
+
+INSERT INTO Section (title, popularity)
+VALUES ('History', 35);
+
+INSERT INTO Section (title, popularity)
+VALUES ('Manga', 72);
+
+INSERT INTO Author (firstName, lastName, age, phone, penName, nationality, awardsWon)
+VALUES ('Hirohiko', 'Araki', 62, 574885463, 'Araki', 'Japanese', 175);
+
+INSERT INTO Author (firstName, lastName, age, phone, penName, nationality, awardsWon)
+VALUES ('Visan', 'Fabian', 25, 784532759, 'Many', 'Romanian', 15);
+
+INSERT INTO Author (firstName, lastName, age, phone, penName, nationality, awardsWon)
+VALUES ('Donda', 'Mihaita', 20, 765749687, 'Rage Mike', 'Romanian', 26);
+
+INSERT INTO Book (name, price, section_id, author_id, description, pages, edition)
+VALUES ('Enciclopedia Ciupercilor', 399, (SELECT id FROM Section WHERE title = 'Science Fiction'), (SELECT id FROM Author WHERE penName = 'Rage Mike'), 'Un ghid complet al culegatorului de ciuperci.', 1250, 3);
+
+INSERT INTO Book (name, price, section_id, author_id, description, pages, edition)
+VALUES ('Math Notebook', 2, (SELECT id FROM Section WHERE title = 'History'), (SELECT id FROM Author WHERE penName = 'Rage Mike'), 'Linear algebra and reality shifting.', 180, 1);
+
+INSERT INTO Book (name, price, section_id, author_id, description, pages, edition)
+VALUES ('Emerald Tablet', 15, (SELECT id FROM Section WHERE title = 'History'), (SELECT id FROM Author WHERE penName = 'Many'), 'A comprehensive guide to all things Latvian cuisine.', 1, 1);
+
+INSERT INTO Book (name, price, section_id, author_id, description, pages, edition)
+VALUES ('Romanian Cuisine', 30, (SELECT id FROM Section WHERE title = 'Science Fiction'), (SELECT id FROM Author WHERE penName = 'Rage Mike'), 'Romanian food.', 100, 1);
+
+INSERT INTO LightNovel (name, price, section_id, author_id, artist, pages, volumes)
+VALUES ('Jojo', 180, (SELECT id FROM Section WHERE title = 'Manga'), (SELECT id FROM Author WHERE penName = 'Araki'), 'Hirohiko Araki', 35, 80);
+
+INSERT INTO LightNovel (name, price, section_id, author_id, artist, pages, volumes)
+VALUES ('Attack on Titan', 599, (SELECT id FROM Section WHERE title = 'Manga'), (SELECT id FROM Author WHERE penName = 'Rage Mike'), 'Donda Mihaita', 2000, 64);
