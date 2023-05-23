@@ -58,18 +58,22 @@ public class Main {
                     switch (option) {
                         case 1: {
                             OperationService.printAuthors();
+                            AuditService.log("printAuthors");
                             break;
                         }
                         case 2: {
                             OperationService.printAuthorsNationality();
+                            AuditService.log("printAuthorsNationality");
                             break;
                         }
                         case 3: {
                             OperationService.addAuthor();
+                            AuditService.log("addAuthor");
                             break;
                         }
                         case 4: {
                             OperationService.printAwards();
+                            AuditService.log("printAwards");
                             break;
                         }
                         default: {
@@ -81,9 +85,11 @@ public class Main {
                     switch (option) {
                         case 1: {
                             OperationService.printSections();
+                            AuditService.log("printSections");
                             break;
                         }
                         case 2: {
+                            AuditService.log("printAll");
                             OperationService.printAuthors();
                             OperationService.printAwards();
                             OperationService.printSections();
@@ -101,27 +107,33 @@ public class Main {
                 } else if (menu.equals("Product")) {
                     switch (option) {
                         case 1: {
+                            AuditService.log("printProducts");
                             OperationService.printProducts();
                             break;
                         }
                         case 2: {
+                            AuditService.log("addProduct");
                             OperationService.addProduct();
                             break;
                         }
                         case 3: {
+                            AuditService.log("removeProduct");
                             OperationService.removeProduct();
                             break;
                         }
                         case 4: {
+                            AuditService.log("printBooks");
                             OperationService.printBooks();
                             break;
                         }
                         case 5: {
                             OperationService.printLightNovels();
+                            AuditService.log("printLightNovels");
                             break;
                         }
                         case 6: {
                             OperationService.printGames();
+                            AuditService.log("printNovels");
                             break;
                         }
                         default: {
@@ -132,12 +144,14 @@ public class Main {
                 } else if (menu.equals("Reader")) {
                     switch (option) {
                         case 1: {
+                            AuditService.log("printReaders");
                             OperationService.printReaders();
                             break;
                         }
                         case 2: {
                             try {
                                 OperationService.increaseReaderBudget();
+                                AuditService.log("increaseReaderBudget");
                             } catch (IllegalArgumentException ex) {
                                 System.out.println(ex.getMessage());
                             } finally {
@@ -146,10 +160,12 @@ public class Main {
                         }
                         case 3: {
                             OperationService.buyProduct();
+                            AuditService.log("buyProduct");
                             break;
                         }
                         case 4: {
                             System.out.println("no.");
+                            AuditService.log("areYouRich?");
                             break;
                         }
                         default: {
