@@ -2,10 +2,17 @@ package main;
 import model.*;
 import service.*;
 import java.util.Scanner;
+import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
         String menu = "Default";
+        try {
+            JDBCConnection dbConnection = JDBCConnection.getInstance();
+            Connection connection = dbConnection.getConnection();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         OperationService.initialize();
 

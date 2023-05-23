@@ -1,7 +1,7 @@
 package service;
 import model.*;
+import repository.*;
 import java.util.*;
-
 import java.util.PriorityQueue;
 
 public class OperationService {
@@ -11,27 +11,27 @@ public class OperationService {
     private static List<Reader> readers = new ArrayList<>();
 
     public static void initialize() {
-        Author author1 = new Author("Hirohiko", "Araki", 62, 574885463, "Araki", "Japanese", 175);
-        Author author2 = new Author("Visan", "Fabian", 25, 784532759, "Many", "Romanian", 15);
-        Author author3 = new Author("Donda", "Mihaita", 20, 765749687, "Rage Mike", "Romanian", 26);
-        authors.add(author1);
-        authors.add(author2);
-        authors.add(author3);
+        try {
+            Section section1 = new Section("Biologie", 5);
+            Section section2 = new Section("Biologie 2", 6);
+            SectionRepository.createSection(section1);
+            SectionRepository.createSection(section2);
+            SectionRepository.updateSectionPopularity(section1, 90);
+            SectionRepository.deleteSection("Biologie 2");
 
-        Section section1 = new Section("Science Fiction", 87);
-        Section section2 = new Section("History", 35);
-        Section section3 = new Section("Manga", 72);
-        sections.add(section1);
-        sections.add(section2);
-        sections.add(section3);
+            sections = SectionRepository.readSections();
+            authors = AuthorRepository.readAuthors();
+        } catch (Exception e) {}
 
-        products.add(new Book("Enciclopedia Ciupercilor", 399, section1, author3, "Un ghid complet al culegatorului de ciuperci.", 1250, 3));
-        products.add(new LightNovel("Jojo", 180, section3, author1, "The adventures of the Joestar bloodline.", 35, 80));
-        products.add(new Game("Binding of Isaac", 250, section2, author2, "Windows", true));
-        products.add(new Book("Math Notebook", 2, section2, author3, "Linear algebra and reality shifting.", 180, 1));
-        products.add(new LightNovel("Attack on Titan", 599, section3, author3, "Because I was born into this world.", 2000, 64));
-        products.add(new Game("Chess", 50, section1, author1, "Android", true));
-        products.add(new Book("Emerald Tablet", 15, section2, author2, "A comprehensive guide to all things Latvian cuisine.", 1, 1));
+        products.add(new Book("Enciclopedia Ciupercilor", 399, sections.get(0), authorAt(0), "Un ghid complet al culegatorului de ciuperci.", 1250, 3));
+        products.add(new LightNovel("Jojo", 180, sections.get(2), authorAt(1), "The adventures of the Joestar bloodline.", 35, 80));
+        products.add(new Game("Binding of Isaac", 250, sections.get(1), authorAt(2), "Windows", true));
+        products.add(new Book("Math Notebook", 2, sections.get(1), authorAt(1), "Linear algebra and reality shifting.", 180, 1));
+        products.add(new LightNovel("Attack on Titan", 599, sections.get(2), authorAt(2), "Because I was born into this world.", 2000, 64));
+        products.add(new Game("Chess", 50, sections.get(0), authorAt(0), "Android", true));
+        products.add(new Book("Emerald Tablet", 15, sections.get(1), authorAt(2), "A comprehensive guide to all things Latvian cuisine.", 1, 1));
+        products.add(new Book("Romanian Cuisine", 30, sections.get(2), authorAt(1), "Romanian food.", 100, 1));
+
 
         readers.add(new Reader("Ion", "Juice", 12, 785467290, 50, false));
         readers.add(new Reader("Cecilia", "Faina", 35, 785736590, 500, true));
@@ -181,6 +181,26 @@ public class OperationService {
         System.out.println("Product " + name + " not found.");
     }
 
+    public static Author authorAt(int k) {
+        PriorityQueue<Author> authorsOrdered = new PriorityQueue<Author>();
+        int authorsSize = authors.size();
+
+        Author authorToFind = new Author();
+
+        for (int i = 0; i < k + 1; ++i) {
+            if (!authors.isEmpty()) {
+                Author authorTemp = authors.poll();
+                authorToFind = authorTemp;
+                authorsOrdered.add(authorTemp);
+            }
+        }
+
+        for (int i = 0; i < k + 1; ++i) {
+            authors.add(authorsOrdered.poll());
+        }
+
+        return authorToFind;
+    }
     public static void addProduct()
     {
         String type, name;
@@ -393,8 +413,7 @@ public class OperationService {
         }
     }
 
-    public static void addAuthor()
-    {
+    public static void addAuthor() {
         String firstName, lastName, penName, nationality;
         int age, phone, awardsWon;
         Scanner optionScanner = new Scanner(System.in);
