@@ -29,7 +29,7 @@ Calculating total number of awards that authors have won
 
 A super secret option that will tell you something about your future
 
-
+The project features an audit csv file where all actions are logged, and a database connection as well, where tables Author, Section, Book and LightNovel correspond to their model counterparts. Create, read, update and delete operations are implemented too.
 
 Usage
 To use the BookWise, simply download the source code and compile it using your favorite Java compiler.
